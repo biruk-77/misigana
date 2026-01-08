@@ -1,0 +1,7 @@
+{
+  "name": "Eternal Love - A Digital Tribute",
+  "description": "An interactive, beautifully crafted experience designed to express love through personalized memories, AI-generated poetry, and romantic interactive elements.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
