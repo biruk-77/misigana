@@ -1,140 +1,251 @@
 
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AppState } from './types';
-import FloatingHearts from './components/FloatingHearts';
+import Hero from './components/Hero';
+import StoryLine from './components/StoryLine';
+import TheSouls from './components/TheSouls';
+import RelationshipStats from './components/RelationshipStats';
+import WhisperOfGrace from './components/WhisperOfGrace';
+import VibePlayer from './components/VibePlayer';
+import OpenWhen from './components/OpenWhen';
+import FilmStrip from './components/FilmStrip';
+import FutureVision from './components/FutureVision';
+import VowMosaic from './components/VowMosaic';
+import SpiritualLegacy from './components/SpiritualLegacy';
+import TimeCapsule from './components/TimeCapsule';
 import FallingPetals from './components/FallingPetals';
 import GlowParticles from './components/GlowParticles';
-import Hero from './components/Hero';
-import Timeline from './components/Timeline';
-import PoemGenerator from './components/PoemGenerator';
-import ReasonCards from './components/ReasonCards';
-import { Heart, Volume2, VolumeX, ArrowUp } from 'lucide-react';
+import { 
+  Heart, Activity, Orbit, LayoutGrid, Layers, Zap, Star, Sparkles
+} from 'lucide-react';
+
+const NexusDock: React.FC<{ 
+  onViewChange: (v: 'archive' | 'dashboard' | 'nexus') => void;
+  currentView: string;
+}> = ({ onViewChange, currentView }) => {
+  return (
+    <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100000] flex items-center gap-2 p-2 bg-espresso/90 backdrop-blur-2xl rounded-full border border-gold/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <button 
+        onClick={() => onViewChange('nexus')}
+        className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all ${currentView === 'nexus' ? 'bg-gold text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
+      >
+        <Orbit size={16} className={currentView === 'nexus' ? 'animate-spin-slow' : ''} />
+        <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">Nexus</span>
+      </button>
+      <button 
+        onClick={() => onViewChange('archive')}
+        className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all ${currentView === 'archive' ? 'bg-gold text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
+      >
+        <Layers size={16} />
+        <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">Archive</span>
+      </button>
+      <button 
+        onClick={() => onViewChange('dashboard')}
+        className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all ${currentView === 'dashboard' ? 'bg-gold text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
+      >
+        <LayoutGrid size={16} />
+        <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">The Hub</span>
+      </button>
+    </div>
+  );
+};
+
+interface Sticker {
+  id: number;
+  x: number;
+  y: number;
+  type: string;
+  drift: number;
+  rotX: number;
+  rotY: number;
+  rotZ: number;
+  scale: number;
+}
 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState>('splash');
-  const [scrolled, setScrolled] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [view, setView] = useState<'archive' | 'dashboard' | 'nexus'>('nexus');
+  const [stickers, setStickers] = useState<Sticker[]>([]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 200);
+  const handleInteraction = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button') || (e.target as HTMLElement).closest('nav')) return;
+    
+    const types = ['heart', 'sparkle', 'star'];
+    const newSticker: Sticker = {
+      id: Date.now() + Math.random(),
+      x: e.clientX,
+      y: e.clientY,
+      type: types[Math.floor(Math.random() * types.length)],
+      drift: (Math.random() - 0.5) * 600,
+      rotX: Math.random() * 360,
+      rotY: Math.random() * 360,
+      rotZ: Math.random() * 360,
+      scale: 0.8 + Math.random() * 2
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleEnter = () => {
-    setState('main');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    setStickers(prev => [...prev, newSticker]);
+    setTimeout(() => {
+      setStickers(prev => prev.filter(s => s.id !== newSticker.id));
+    }, 3000);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  if (state === 'splash') {
+    return <Hero onEnter={() => setState('main')} />;
+  }
 
   return (
-    <div className="min-h-screen relative selection:bg-rose-200 selection:text-rose-950">
+    <div 
+      className="h-[100dvh] w-full bg-champagne text-espresso overflow-hidden flex flex-col relative"
+      onClick={handleInteraction}
+    >
       <GlowParticles />
-      <FloatingHearts />
-      {state === 'main' && <FallingPetals />}
+      
+      <div className="fixed inset-0 pointer-events-none opacity-[0.05] z-0 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
 
-      {/* Floating Utilities */}
-      <div className="fixed bottom-12 right-12 z-[100] flex flex-col gap-4">
-        {scrolled && (
-            <button 
-                onClick={scrollToTop}
-                className="p-5 glass-premium rounded-full hover:scale-110 transition-all duration-500 text-rose-500 shadow-xl reveal active"
+      <header className={`fixed top-0 left-0 w-full h-24 px-8 sm:px-16 flex justify-between items-center transition-all duration-700 z-[5000] ${view === 'archive' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <div className="flex flex-col">
+          <h1 className="text-[14px] font-black tracking-[0.6em] uppercase text-espresso">Sovereign Archive</h1>
+          <span className="text-[9px] font-elegant italic tracking-widest text-gold/60">Bura & Ma Q • 2025</span>
+        </div>
+        <div className="flex items-center gap-4">
+           <div className="size-2 rounded-full bg-gold animate-pulse shadow-[0_0_10px_#D4AF37]" />
+           <span className="text-[10px] font-black uppercase tracking-widest text-espresso/40">Ma Q's Feed</span>
+        </div>
+      </header>
+
+      <main className="flex-1 w-full relative h-full overflow-hidden z-10">
+        <AnimatePresence mode="wait">
+          {view === 'nexus' && (
+            <motion.div 
+              key="nexus"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="h-full w-full flex items-center justify-center p-8 overflow-hidden"
             >
-                <ArrowUp size={20} />
-            </button>
-        )}
-        <button 
-            onClick={() => setIsMuted(!isMuted)}
-            className="p-5 glass-premium rounded-full hover:scale-110 transition-all duration-500 text-rose-400 shadow-xl"
-        >
-            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} className="animate-pulse" />}
-        </button>
-      </div>
+              <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-32 items-center">
+                 <div className="space-y-12">
+                    <div className="space-y-6">
+                       <motion.div initial={{ width: 0 }} animate={{ width: 80 }} className="h-0.5 bg-gold" />
+                       <h2 className="text-8xl sm:text-[12vw] font-display font-black italic text-espresso tracking-tighter leading-[0.7] liquid-text">
+                          The <br/> <span className="luxury-text-gradient">Core</span>
+                       </h2>
+                       <p className="text-2xl sm:text-3xl font-elegant italic text-espresso/40 max-w-lg leading-tight">
+                          "At the center of everything, there is only us. A divine synchronicity that never fades."
+                       </p>
+                    </div>
+                    <button 
+                      onClick={() => setView('archive')}
+                      className="px-16 py-8 rounded-full bg-espresso text-white font-black uppercase tracking-[0.5em] text-[10px] hover:bg-gold transition-all shadow-2xl flex items-center gap-6"
+                    >
+                      Browse Archive <Zap size={14} />
+                    </button>
+                 </div>
+                 <div className="relative aspect-square flex items-center justify-center scene-3d preserve-3d">
+                    <motion.div 
+                      animate={{ rotateY: 360, rotateX: [0, 10, 0] }}
+                      transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                      className="size-72 sm:size-[550px] rounded-[5rem] glass-card border-2 border-white/40 flex items-center justify-center shadow-2xl backdrop-blur-3xl preserve-3d"
+                    >
+                       <Heart size={200} className="text-gold fill-gold/5 animate-pulse" strokeWidth={0.5} />
+                    </motion.div>
+                 </div>
+              </div>
+            </motion.div>
+          )}
 
-      {state === 'splash' ? (
-        <Hero onEnter={handleEnter} />
-      ) : (
-        <main className="relative z-10 animate-[fadeIn_3s_cubic-bezier(0.22,1,0.36,1)] overflow-hidden">
-          {/* Elite Navigation Bar */}
-          <header className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-[1.2s] px-12 py-10 ${scrolled ? 'bg-white/10 backdrop-blur-3xl py-6 translate-y-0' : 'bg-transparent'}`}>
-            <div className="max-w-7xl mx-auto flex justify-between items-center">
-              <div className="font-serif-premium italic text-3xl text-rose-950/80 flex items-center gap-4 group">
-                <Heart className="w-6 h-6 fill-rose-500 text-rose-500 group-hover:scale-125 transition-transform duration-700" />
-                <span className="tracking-[0.4em] uppercase text-[10px] font-bold opacity-60">Biruk & Misgana</span>
+          {view === 'archive' && (
+            <motion.div 
+              key="archive"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 w-full h-full z-[10000] overflow-hidden flex flex-col"
+            >
+              <div className="flex-1 relative overflow-hidden">
+                <StoryLine />
               </div>
               <button 
-                onClick={() => setState('splash')}
-                className="text-rose-400 hover:text-rose-950 transition-colors font-serif-premium italic text-sm tracking-[0.3em] uppercase"
+                onClick={() => setView('nexus')}
+                className="fixed top-6 right-6 z-[20000] px-6 py-3 bg-gold text-white shadow-2xl rounded-full text-[9px] font-black uppercase tracking-widest hover:bg-espresso transition-all border-2 border-white/20"
               >
-                Back to Entrance
+                Close Archive
               </button>
-            </div>
-          </header>
+            </motion.div>
+          )}
 
-          <div className="pt-60">
-            {/* Elite Intro */}
-            <div className="max-w-5xl mx-auto px-12 text-center mb-60 reveal">
-              <span className="font-serif-premium text-rose-300 uppercase tracking-[0.6em] text-[10px] block mb-12">The Gentleman's Confession</span>
-              <h1 className="font-serif-premium text-7xl md:text-[10rem] text-rose-950 mb-16 italic leading-none">My peace in <br /> every storm.</h1>
-              <div className="w-px h-32 bg-gradient-to-b from-rose-200 to-transparent mx-auto mb-16" />
-              <p className="font-serif-premium text-3xl text-rose-900/30 leading-relaxed italic max-w-3xl mx-auto">
-                "Misgana, they say a soulmate is an answer to a prayer you didn't know you were saying. Every detail here is a tribute to our God-given path."
-              </p>
-            </div>
-
-            <Timeline />
-            
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-rose-50/20 to-transparent pointer-events-none" />
-              <PoemGenerator />
-              <ReasonCards />
-            </div>
-
-            {/* Cinematic Finale */}
-            <footer className="py-60 text-center px-12 bg-rose-950 text-white relative overflow-hidden">
-              <div className="absolute inset-0 opacity-20 pointer-events-none">
-                <div className="absolute top-1/4 left-1/4 w-[50rem] h-[50rem] bg-rose-400 rounded-full blur-[200px]" />
-                <div className="absolute bottom-1/4 right-1/4 w-[50rem] h-[50rem] bg-rose-600 rounded-full blur-[200px]" />
+          {view === 'dashboard' && (
+            <motion.div 
+              key="dashboard"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="h-full w-full overflow-y-auto custom-scrollbar pt-32 pb-64 px-8"
+            >
+              <div className="max-w-7xl mx-auto space-y-48">
+                <TheSouls />
+                <FilmStrip />
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-20">
+                   <VibePlayer />
+                   <RelationshipStats />
+                </div>
+                <WhisperOfGrace />
+                <FutureVision />
+                <VowMosaic />
+                <SpiritualLegacy />
+                <TimeCapsule />
+                <OpenWhen />
               </div>
-              
-              <div className="max-w-4xl mx-auto relative z-10 space-y-20">
-                <div className="p-8 glass-premium inline-block rounded-full animate-float-slow">
-                    <Heart className="w-16 h-16 text-rose-400 fill-rose-400/20 stroke-[1px]" />
-                </div>
-                
-                <div className="space-y-8">
-                    <h2 className="font-serif-premium text-7xl md:text-[9rem] italic leading-tight">Always Your <br /> Gentleman.</h2>
-                    <div className="h-px w-32 bg-rose-800 mx-auto" />
-                </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
 
-                <p className="font-serif-premium text-3xl md:text-4xl italic opacity-60 leading-relaxed max-w-2xl mx-auto">
-                  "In every prayer, in every breath, <br /> and in every version of eternity... <br /> I will find you."
-                </p>
-                
-                <div className="pt-40 space-y-4">
-                    <div className="font-serif-premium italic tracking-[0.6em] text-[10px] uppercase text-rose-400/60">
-                        Misgana & Biruk &bull; A Digital Covenant
-                    </div>
-                    <div className="font-serif-premium italic text-[12px] text-rose-400/30">
-                        Est. November 22, 2024
-                    </div>
-                </div>
+      {/* Global Decor Overlay - 3D TUMBLING STICKERS */}
+      <div className="fixed inset-0 pointer-events-none z-[100000] overflow-hidden">
+        <FallingPetals />
+        
+        <AnimatePresence>
+          {stickers.map(s => (
+            <motion.div
+              key={s.id}
+              initial={{ 
+                opacity: 0, 
+                scale: 0, 
+                x: s.x, 
+                y: s.y,
+                rotateX: s.rotX,
+                rotateY: s.rotY,
+                rotateZ: s.rotZ
+              }}
+              animate={{ 
+                opacity: [0, 1, 1, 0], 
+                scale: [0, s.scale, s.scale, s.scale * 0.5], 
+                x: s.x + s.drift,
+                y: window.innerHeight + 200,
+                rotateX: s.rotX + (Math.random() > 0.5 ? 1080 : -1080),
+                rotateY: s.rotY + (Math.random() > 0.5 ? 720 : -720),
+                rotateZ: s.rotZ + (Math.random() > 0.5 ? 360 : -360)
+              }}
+              transition={{ 
+                duration: 2.8, 
+                ease: [0.33, 1, 0.68, 1]
+              }}
+              className="fixed text-gold drop-shadow-[0_15px_35px_rgba(212,175,55,0.6)] scene-3d preserve-3d"
+              style={{ left: 0, top: 0, transformStyle: 'preserve-3d' }}
+            >
+              <div className="preserve-3d flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+                 {s.type === 'heart' && <Heart fill="currentColor" size={40} />}
+                 {s.type === 'sparkle' && <Sparkles size={40} />}
+                 {s.type === 'star' && <Star fill="currentColor" size={40} />}
               </div>
-            </footer>
-          </div>
-        </main>
-      )}
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; filter: blur(30px); transform: scale(1.05); }
-          to { opacity: 1; filter: blur(0); transform: scale(1); }
-        }
-      `}</style>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
+      <NexusDock currentView={view} onViewChange={setView} />
     </div>
   );
 };

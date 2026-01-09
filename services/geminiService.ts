@@ -1,25 +1,27 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-export const generateLovePoem = async (name: string, favoriteThing: string): Promise<string> => {
+export const generateLovePoem = async (name: string, favoriteThing: string, mood: string = 'Cinematic'): Promise<string> => {
   const ai = getAI();
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Write a short, elite, and deeply emotional romantic poem for a girl named ${name} (often called Yemiwedish) from her boyfriend Biruk (her Gentleman). 
-      The poem must mention her love for ${favoriteThing}. 
-      Incorporate themes of:
-      1. Their spiritual, God-centered bond (Christ at the center).
-      2. 'Effort over egos'—a love that fixes and stays.
-      3. She is his peace and his 'safe place'.
-      Style: Elegant, like a modern-day Rumi or Neruda. Soft and cinematic.`,
+      model: 'gemini-3-pro-preview',
+      contents: `Write a short, elite, cinematic love poem for Misgana (Yemiwedish) from Biruk (her Gentleman).
+      Topic: ${favoriteThing}.
+      Mood: ${mood}.
+      Tone: Sophisticated, spiritual, and deeply romantic.
+      Core concepts: 
+      - "Choosing effort over egos."
+      - "The 5:59 AM synchronicity."
+      - "Christ at the center of the home."
+      Format: Max 6-8 lines. Use high-end, modern poetic language. Avoid clichés.`,
     });
-    return response.text || "My love for you transcends words, and even silence speaks of you.";
+    return response.text || "In the space between heartbeats, I found your name written in the language of stars.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Your beauty is beyond the reach of stars, a light that guides me home.";
+    return "In the quiet of five fifty-nine, I found the prayer that God had answered—you.";
   }
 };
 
@@ -28,14 +30,24 @@ export const generateLoveReason = async (): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: "Generate one unique, elite-level poetic reason why Biruk loves Misgana (Yemiwedish). Focus on her spiritual depth, her being his peace, or their decision to always choose effort. One sentence, incredibly heartfelt.",
-      config: {
-        maxOutputTokens: 100,
-      }
+      contents: "Generate one elite, single-sentence reason why Biruk loves Misgana. Focus on soul connection, shared faith, and the beauty of 'us'. Must feel heavy with emotion.",
     });
-    return response.text?.trim() || "You are the missing piece of my soul's puzzle.";
+    return response.text?.trim() || "I love you because you are the peace that Christ promised to my restless heart.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Every moment with you is a gift I never knew I deserved.";
+    return "I love you because you are the peace that Christ promised to my restless heart.";
+  }
+};
+
+export const generateLoveNote = async (prompt: string): Promise<string> => {
+  const ai = getAI();
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: `Write a one-sentence hidden love message for Misgana from Biruk based on: ${prompt}. Make it feel like a secret whispered in the dark.`,
+    });
+    return response.text?.trim() || "You are the quiet magic I didn't know I was searching for.";
+  } catch (error) {
+    return "Every version of my future has you in the center.";
   }
 };

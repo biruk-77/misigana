@@ -1,7 +1,8 @@
 {
-  "name": "Eternal Love - A Digital Tribute",
-  "description": "An interactive, beautifully crafted experience designed to express love through personalized memories, AI-generated poetry, and romantic interactive elements.",
+  "name": "Biruk & Misgana: Our Archive",
+  "description": "An interactive, beautifully crafted experience designed to express love through real conversations, shared memories, and the unique bond between Biruk and Misgana.",
   "requestFramePermissions": [
-    "microphone"
+    "microphone",
+    "camera"
   ]
 }

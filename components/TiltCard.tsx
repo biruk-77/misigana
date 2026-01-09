@@ -4,9 +4,10 @@ import React, { useRef, useState } from 'react';
 interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
+  intensity?: number;
 }
 
-const TiltCard: React.FC<TiltCardProps> = ({ children, className = "" }) => {
+const TiltCard: React.FC<TiltCardProps> = ({ children, className = "", intensity = 10 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
 
@@ -18,9 +19,8 @@ const TiltCard: React.FC<TiltCardProps> = ({ children, className = "" }) => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Calculate rotation: 10 degrees max
-    const rotateY = ((x - centerX) / centerX) * 8;
-    const rotateX = ((centerY - y) / centerY) * 8;
+    const rotateY = ((x - centerX) / centerX) * intensity;
+    const rotateX = ((centerY - y) / centerY) * intensity;
     
     setRotate({ x: rotateX, y: rotateY });
   };
@@ -35,14 +35,12 @@ const TiltCard: React.FC<TiltCardProps> = ({ children, className = "" }) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className={`perspective-container ${className}`}
-      style={{
-        transition: 'transform 0.1s ease',
-      }}
     >
       <div
-        className="card-3d w-full h-full"
+        className="transition-transform duration-500 ease-out"
         style={{
-          transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+          transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateZ(20px)`,
+          transformStyle: 'preserve-3d',
         }}
       >
         {children}
