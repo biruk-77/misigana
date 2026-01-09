@@ -1,6 +1,6 @@
 import { Memory, LoveReason, ChatMoment } from './types';
 
-const BASE_URL = 'https://raw.githubusercontent.com/biruk-77/misigana/main/public/images/';
+const BASE_URL = '/images/';
 
 export const MEMORIES: Memory[] = [
   // --- CHAPTER 1: THE ANSWERED PRAYER (THE MEETING) ---
