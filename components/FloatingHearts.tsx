@@ -12,7 +12,7 @@ const FloatingHearts: React.FC = () => {
           id: Date.now(),
           left: Math.random() * 100,
           duration: 5 + Math.random() * 10,
-          size: 10 + Math.random() * 30,
+          size: 8 + Math.random() * 15,
         }
       ]);
     }, 1000);
