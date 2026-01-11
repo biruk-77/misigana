@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en" class="light">
+<script type="module" crossorigin src="/misigana/assets/index-BB8fCykv.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biruk & Misgana: Sovereign Sanctuary</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@100..900&family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "champagne": "#FDFBF7",
+                        "rose-gold": "#E2B1B1",
+                        "sage": "#D1D8C5",
+                        "espresso": "#3E3636",
+                        "gold": "#D4AF37",
+                        "primary": "#d4af37", 
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "sans": ["Montserrat", "sans-serif"],
+                        "handwritten": ["Caveat", "cursive"],
+                        "elegant": ["Cormorant Garamond", "serif"],
+                    },
+                    animation: {
+                        "reveal-up": "reveal-up 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards",
+                        "float-slow": "float-slow 12s ease-in-out infinite",
+                        "pulse-gentle": "pulse-gentle 4s ease-in-out infinite",
+                        "spin-vinyl": "spin-vinyl 20s linear infinite",
+                        "mesh": "mesh 25s ease infinite",
+                        "draw-line": "draw-line 3s cubic-bezier(0.19, 1, 0.22, 1) forwards",
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        @keyframes reveal-up {
+            from { opacity: 0; transform: translateY(60px); filter: blur(15px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        @keyframes mesh {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        body {
+            background-color: #FDFBF7;
+            color: #3E3636;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: 0.05em;
+        }
+
+        .mesh-gradient {
+            background: linear-gradient(-45deg, #FDFBF7, #fdf6f6, #f2f7ec, #FDFBF7);
+            background-size: 400% 400%;
+            animation: mesh 20s ease infinite;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            background: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .liquid-text {
+            filter: url(#liquid);
+        }
+
+        /* 3D Scene Config */
+        .scene-3d {
+            perspective: 2000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .luxury-text-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #3E3636 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        ::selection {
+            background: #D4AF37;
+            color: white;
+        }
+    </style>
+    <div class="film-grain"></div>
+    <div id="root"></div>
+</body>
+</html>
