@@ -172,7 +172,7 @@ export const MEMORIES: Memory[] = [
     image: `${BASE_URL}photo_59%4023-12-2025_17-52-56.jpg`,
     chatHistory: [
       { sender: 'Bura', text: "Ur exactly how I imaged u as a wife." },
-      { sender: 'Ma Q', text: "Am I ur favorite drug? Being yours Infinity times." }
+      { sender: 'Ma Q', text: "Am I ur favorite drug? Being yours always." }
     ]
   },
   {
@@ -199,7 +199,7 @@ export const MEMORIES: Memory[] = [
   },
   {
     id: '63',
-    title: 'Forever Falling',
+    title: 'Falling Again',
     date: 'DEC 23 2025',
     description: 'I fall for you again every time I see your face.',
     image: `${BASE_URL}photo_63%4023-12-2025_21-44-38.jpg`,
@@ -280,7 +280,7 @@ export const MEMORIES: Memory[] = [
     id: '70',
     title: 'Rare Generation',
     date: 'DEC 24 2025',
-    description: 'In a world of temporary things, you are forever.',
+    description: 'In a world of temporary things, you are a blessing.',
     image: `${BASE_URL}photo_70%4024-12-2025_14-34-01.jpg`,
     chatHistory: [
       { sender: 'Bura', text: "I didn't think I would find someone like u in this generation." },
@@ -366,9 +366,9 @@ export const MEMORIES: Memory[] = [
   },
   {
     id: '79',
-    title: 'Infinity Times',
+    title: 'Countless Moments',
     date: 'DEC 24 2025',
-    description: 'Forever is not long enough.',
+    description: 'Every moment with you is a gift.',
     image: `${BASE_URL}photo_79%4024-12-2025_14-34-02.jpg`,
     chatHistory: [
       { sender: 'Ma Q', text: "I want to be by your side as we grow old together. I'm yours." },
@@ -434,7 +434,7 @@ export const MEMORIES: Memory[] = [
   },
   {
     id: '99',
-    title: 'Endless New Year',
+    title: 'A New Beginning',
     date: 'DEC 31 2025',
     description: 'Starting every year, every month, every day with you.',
     image: `${BASE_URL}photo_99%4031-12-2025_10-30-47.jpg`,
